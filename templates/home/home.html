@@ -1,0 +1,400 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+
+
+{% block title %}Home - Ja pra cozinha{% endblock %}
+
+{% block content %}
+<style>
+/* Estilos gerais */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo para o cabeçalho */
+header {
+    background: url('../images/header.jpg') no-repeat center center;
+    background-size: cover;
+    color: white;
+    text-align: center;
+    padding: 50px 0;
+    font-family: 'Georgia', serif;
+}
+
+header h1 {
+    font-size: 4em;
+    margin: 0;
+}
+
+/* Estilo para o banner principal */
+.banner {
+    width: 100%;
+    min-height: 100vh; /* Altura inicial como 50% da altura da viewport */
+    background: url("{% static 'assets/images/fundosite.png' %}") no-repeat center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+.banner h1 {
+    font-size: 3em;
+    margin: 0;
+}
+
+.banner p {
+    font-size: 1.2em;
+}
+
+/* Estilo para a seção Sobre Nós */
+.section-about {
+    padding: 40px 20px;
+    background-color: #f0f4f8;
+    text-align: center;
+}
+
+.section-about h2 {
+    font-family: 'Pacifico', cursive; /* Fonte manuscrita */
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.section-about .separator {
+    width: 50px;
+    height: 2px;
+    background-color: #333;
+    margin: 20px auto;
+}
+
+.section-about .content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.section-about .content div {
+    border-radius: 15px;
+    background-color: white;
+    border: #333;
+    display: flex;
+    max-width: 1200px;
+    padding: 43px;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.section-about .content div img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 50%; /* Imagens redondas */
+    margin: 20px 0;
+}
+
+.section-about p {
+    font-size: 1.1em;
+    line-height: 1.6em;
+    color: #000;
+    max-width: 400px;
+    padding: 40px;
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+    .section-about .content div {
+        flex-direction: column; /* Coloca o texto e a imagem em uma coluna em dispositivos menores */
+        text-align: center;
+    }
+    
+    .section-about p {
+        order: 1;
+        
+    }
+    
+    .section-about .content div img {
+        order: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-about .content {
+        gap: 10px; /* Reduz o espaçamento entre as colunas em dispositivos menores */
+    }
+
+    .section-about .content div {
+        padding: 20px; /* Reduz o padding em dispositivos menores */
+    }
+
+    .section-about p {
+        order: 1;
+        max-width: 300px; /* Reduz o tamanho máximo do texto em dispositivos menores */
+        padding: 20px;
+    }
+    
+    .section-about .content div img {
+        order: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner h1 {
+        font-size: 2em; /* Ajusta o tamanho da fonte no banner para dispositivos menores */
+    }
+
+    .banner p {
+        font-size: 1em; /* Ajusta o tamanho da fonte no banner para dispositivos menores */
+    }
+
+    .section-about h2 {
+        font-size: 2em; /* Ajusta o tamanho da fonte do título "Sobre Nós" em dispositivos menores */
+    }
+
+    .section-about p {
+        font-size: 1em; /* Ajusta o tamanho da fonte do texto em dispositivos menores */
+    }
+}
+
+/* Estilo para a seção de Produtos */
+.section-products {
+    padding: 60px 20px;
+    background-color: #f0f4f8;
+    text-align: center;
+}
+
+.section-products h2 {
+    font-family: 'Pacifico', cursive; /* Fonte manuscrita */
+    font-size: 3em;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.section-products .category {
+    margin: 60px 0;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.section-products .category:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.section-products .category-title {
+    font-size: 2em;
+    font-weight: bold;
+    color: #fff;
+    background-color: #333;
+    padding: 15px 30px;
+    border-radius: 0 0 20px 20px;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.section-products .category-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+    border-radius: 20px;
+    position: relative;
+}
+
+.section-products .category-content::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120%;
+    height: 60px;
+    background-color: #333;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.section-products .product {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    {#max-width: 800px;#}
+    width: 100%;
+    margin: 20px 0;
+    padding: 20px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.section-products .product:hover {
+    transform: translateY(-5px);
+}
+
+.section-products .product img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 15px;
+    margin-right: 30px;
+    flex-shrink: 0;
+}
+
+.section-products .product p {
+    font-size: 1.1em;
+    line-height: 1.6em;
+    color: #444;
+    margin: 0;
+    flex-grow: 1;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .section-products .product {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px;
+    }
+
+    .section-products .product img {
+        margin: 0 0 20px 0;
+    }
+
+    .section-products .category-content::before {
+        height: 40px;
+        top: -40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-products h2 {
+        font-size: 2.5em;
+    }
+
+    .section-products .category-title {
+        font-size: 1.8em;
+    }
+}
+
+
+</style>   
+    
+<div class="banner" >
+                
+ </div>
+<div class="section-about">
+    <h2>Sobre Nós</h2>
+    <div class="separator"> </div>
+    <div class="content">
+        <div>
+            <p>
+                 Nascido em 2016 a partir de uma busca incansável por novos sabores, o Já Pra Cozinha é uma fabricante
+                artesanal dedicada a criar produtos que incrementem e transformem o seu prato. Nossa missão é trazer
+                experiências incríveis para o seu paladar, sempre fugindo do ordinário e do tradicional.
+
+                </p>
+            <img src="{% static 'assets/images/comidacriativa.webp' %}" alt="Sobre Nós">
+        </div>
+        <div>
+            <img src="{% static 'assets/images/sobre2.webp' %}" alt="Nossa Missão">
+            <p> Experimente toda a nossa linha e descubra os sabores únicos e marcantes de cada produto! Seja criando
+                suas receitas com nossos molhos como acompanhamento, tempero ou base, as possibilidades são imensas.
+                Garantimos que você vai se surpreender cada vez mais!
+                       </div>
+        <div>
+            <p>
+                Com uma linha diversificada de molhos, geleias e temperos, queremos proporcionar uma verdadeira viagem
+                gastronômica. Cada um dos nossos produtos é desenvolvido com misturas exóticas, temperos marcantes e
+                aromas inacreditáveis, focando sempre em oferecer uma nova experiência a cada sabor descoberto. </p>
+            <img src="{% static 'assets/images/sobre3.webp' %}" alt="Nossos Valores">
+        </div>
+    </div>
+</div>
+    
+    
+ <div class="section-products">
+    <h2>Produtos</h2>
+     <div class="separator"> </div>
+    
+    <!-- Categoria Molhos -->
+    <div class="category">
+        <div class="category-title">Molhos</div>
+        <div class="category-content">
+            <div class="product">
+                <img src="{% static 'assets/images/molhosmostardaeketchup.png' %}" alt="Molho">
+                <p>
+                    Nossos molhos são preparados com ingredientes frescos e selecionados, oferecendo sabores autênticos e inesquecíveis.
+                    Experimente a variedade de molhos que combinam perfeitamente com suas receitas favoritas.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Categoria Sais -->
+    <div class="category">
+        <div class="category-title">Sais</div>
+        <div class="category-content">
+            <div class="product">
+                <img src="{% static 'assets/images/sais.webp' %}" alt="Sal">
+                <p>
+                    Descubra nossos sais especiais, ideais para realçar o sabor de qualquer prato com um toque gourmet.
+                    Sais premium com uma seleção cuidadosa de ingredientes para proporcionar o máximo de sabor.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Categoria Chutneis -->
+    <div class="category">
+        <div class="category-title">Chutneis</div>
+        <div class="category-content">
+            <div class="product">
+                <img src="{% static 'assets/images/chutneis.webp' %}" alt="Chutney">
+                <p>
+                    Nossos chutneis são elaborados para oferecer uma experiência sensorial rica e marcante.
+                    Perfeitos para acompanhar carnes, queijos e diversos pratos, proporcionando um sabor único.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const products = document.querySelectorAll('.product');
+
+        products.forEach(product => {
+            product.addEventListener('mouseover', function() {
+                product.style.transform = 'translateY(-10px)';
+                product.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.2)';
+            });
+
+            product.addEventListener('mouseout', function() {
+                product.style.transform = 'translateY(0)';
+                product.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.1)';
+            });
+        });
+    });
+</script>
+
+
+{% endblock %}

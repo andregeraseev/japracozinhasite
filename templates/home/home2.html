@@ -1,0 +1,1017 @@
+
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block title %}Home - Já Pra Cozinha{% endblock %}
+
+{% block content %}
+    <style>
+    /* Estilos gerais */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    background-color: #f4f4f4;
+    scroll-behavior: smooth;
+}
+    
+/* Estilo do Navegador */
+.navbar {
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    position: absolute; /* Inicia no topo */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.navbar-logo img {
+    width: 400px;
+    height: auto;
+}
+
+.navbar-toggler {
+    display: none; /* Oculto em telas grandes */
+    font-size: 1.5em;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.navbar-toggler:hover {
+    color: #ffcc00;
+}
+
+.navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    transition: max-height 0.3s ease;
+}
+
+.navbar-links li {
+    position: relative;
+}
+
+.navbar-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 10px;
+    transition: color 0.3s;
+}
+
+.navbar-links a:hover {
+    color: #ffcc00;
+}
+
+.navbar.fixed {
+    position: fixed; /* Torna o navegador fixo ao rolar */
+    background-color: rgb(54 52 53);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    
+}
+
+/* Estilo para Tela Menor */
+@media (max-width: 768px) {
+    .navbar-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 0px;
+    }
+
+    .navbar-toggler {
+        display: block; /* Exibir botão de hambúrguer */
+    }
+
+    .navbar-links {
+        flex-direction: column;
+        gap: 10px;
+        max-height: 0;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .navbar-links.show {
+        max-height: 200px; /* Expande o menu */
+    }
+
+    .navbar-links a {
+        padding: 10px 0;
+        width: 100%;
+    }
+    
+    .navbar-logo img {
+    width: 300px;
+    height: auto;
+}
+}
+
+
+
+/* Estilo para o cabeçalho */
+header {
+    background: url('../images/header.jpg') no-repeat center center;
+    background-size: cover;
+    color: white;
+    text-align: center;
+    padding: 60px 0;
+    font-family: 'Lobster', cursive;
+}
+
+header h1 {
+    font-size: 3.5em;
+    margin: 0;
+    animation: fadeInDown 1s ease-in-out;
+}
+
+/* Estilo para o banner principal */
+.banner {
+    margin-top: 100px;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(45deg, rgb(253 187 45 / 12%), rgb(255 87 34 / 35%)), url(/static/assets/images/fundosite.png) no-repeat center center;    background-size: cover;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.banner h1, .banner p {
+    z-index: 1;
+}
+
+.banner h1 {
+    font-size: 4em;
+    margin: 0;
+    animation: slideInLeft 1.5s ease-out;
+}
+
+.banner p {
+    font-size: 1.5em;
+    animation: slideInRight 1.5s ease-out;
+}
+
+/* Estilo para a seção Sobre Nós */
+.section-about {
+    padding: 60px 20px;
+    background-color: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.section-about h2 {
+    font-family: 'Lobster', cursive;
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: #ff5722;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.section-about .separator {
+    width: 60px;
+    height: 3px;
+    background-color: #ff5722;
+    margin: 20px auto;
+    animation: growWidth 1s ease-out forwards;
+}
+
+.section-about .content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-direction: row;
+    padding: 40px 0;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.section-about .content div {
+    border-radius: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    min-height: 780px;
+    padding: 30px;
+    box-sizing: border-box;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.section-about .content div:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.section-about .content div img {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    border-radius: 50%;
+    margin: 20px 0;
+}
+
+.section-about p {
+    font-size: 1.2em;
+    line-height: 1.8em;
+    color: #555;
+    max-width: 400px;
+    padding: 0 20px;
+    text-align: justify;
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+    .section-about .content div {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .section-about p {
+        order: 1;
+    }
+
+    .section-about .content div img {
+        order: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-about .content {
+        gap: 15px;
+    }
+
+    .section-about .content div {
+        padding: 20px;
+    }
+
+    .section-about p {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .banner h1 {
+        font-size: 3em;
+    }
+
+    .banner p {
+        font-size: 1.2em;
+    }
+
+    .section-about h2 {
+        font-size: 2.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner h1 {
+        font-size: 2.5em;
+    }
+
+    .banner p {
+        font-size: 1em;
+    }
+
+    .section-about h2 {
+        font-size: 2em;
+    }
+
+    .section-about p {
+        font-size: 1em;
+    }
+}
+
+/* Estilo para a seção de Produtos */
+.section-products {
+    padding: 60px 20px;
+    background-color: #fff;
+    text-align: center;
+    position: relative;
+}
+
+.section-products h2 {
+    font-family: 'Lobster', cursive;
+    font-size: 3em;
+    margin-bottom: 40px;
+    color: #ff5722;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.section-products .category {
+    margin: 60px 0;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.section-products .category:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.section-products .category-title {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #fff;
+    background-color: #ff5722;
+    padding: 20px 40px;
+    border-radius: 0 0 20px 20px;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    animation: slideInDown 1s ease-out;
+}
+
+.section-products .category-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+    border-radius: 20px;
+    position: relative;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.section-products .product {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    margin: 20px 0;
+    padding: 20px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.section-products .product:hover {
+    transform: translateY(-5px);
+}
+
+.section-products .product img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 15px;
+    margin-right: 30px;
+    flex-shrink: 0;
+}
+
+.section-products .product p {
+    font-size: 1.2em;
+    line-height: 1.8em;
+    color: #444;
+    margin: 0;
+    flex-grow: 1;
+    text-align: justify;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .section-products .product {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px;
+    }
+
+    .section-products .product img {
+        margin: 0 0 20px 0;
+    }
+
+    .section-products .category-content::before {
+        height: 40px;
+        top: -40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-products h2 {
+        font-size: 2.5em;
+    }
+
+    .section-products .category-title {
+        font-size: 2em;
+    }
+}
+
+/* Animações */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes growWidth {
+    from {
+        width: 0;
+    }
+    to {
+        width: 60px;
+    }
+}
+
+ /* Estilos Newsletter */
+.section-newsletter {
+    background: url("{% static 'assets/images/newsletter.webp' %}") no-repeat center center;
+    background-size: cover;
+    padding: 80px 20px;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.section-newsletter::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Overlay para melhorar o contraste */
+    z-index: 0;
+}
+
+.newsletter-content {
+    position: relative;
+    z-index: 1;
+}
+
+.newsletter-content h2 {
+    font-family: 'Lobster', cursive;
+    font-size: 3em;
+    margin-bottom: 20px;
+    animation: fadeInDown 1s ease-in-out;
+}
+
+.newsletter-content p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.newsletter-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.newsletter-form input[type="email"] {
+    padding: 15px;
+    font-size: 1em;
+    border-radius: 30px;
+    border: none;
+    width: 300px;
+    max-width: 80%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+}
+
+.newsletter-form input[type="email"]:focus {
+    outline: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.newsletter-form button {
+    background-color: #ff5722;
+    color: white;
+    padding: 15px 30px;
+    font-size: 1em;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.newsletter-form button:hover {
+    background-color: #e64a19;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .newsletter-content h2 {
+        font-size: 2.5em;
+    }
+
+    .newsletter-content p {
+        font-size: 1.1em;
+    }
+
+    .newsletter-form {
+        flex-direction: column;
+    }
+
+    .newsletter-form input[type="email"] {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .newsletter-content h2 {
+        font-size: 2em;
+    }
+
+    .newsletter-content p {
+        font-size: 1em;
+    }
+
+    .newsletter-form button {
+        padding: 15px 25px;
+    }
+}
+     /* Footer */
+    .footer {
+    background-color: #333;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-logo img {
+    width: 120px;
+    height: auto;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-links a {
+    color: #ffcc00;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+.footer-social {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icon {
+    color: #ffcc00;
+    font-size: 1.5em;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.social-icon:hover {
+    color: #fff;
+    transform: scale(1.2);
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #bbb;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+ /* Responsividade */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .footer-links a {
+        margin: 0 10px;
+    }
+}
+/* Estilo para a seção de Contato */
+.section-contact {
+    padding: 60px 20px;
+    background-color: #e0e5ec;
+    text-align: center;
+}
+
+.section-contact h2 {
+    font-family: 'Pacifico', cursive; /* Fonte manuscrita */
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.section-contact .separator {
+    width: 50px;
+    height: 3px;
+    background-color: #333;
+    margin: 20px auto;
+}
+
+.section-contact p {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #333;
+    outline: none;
+}
+
+.contact-form button {
+    width: 100%;
+    padding: 15px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.contact-form button:hover {
+    background-color: #555;
+    transform: translateY(-3px);
+}
+
+.contact-form textarea {
+    resize: vertical;
+    height: 150px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .contact-form {
+        padding: 30px;
+    }
+
+    .section-contact h2 {
+        font-size: 2.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-contact h2 {
+        font-size: 2em;
+    }
+
+    .section-contact p {
+        font-size: 1em;
+    }
+}
+
+
+
+    </style>
+    <!-- NAVBAR-->
+   <nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-logo">
+            <a href="#home">
+                <img src="{% static 'assets/images/logohorizontaltransparencia.png' %}" alt="Logo Já Pra Cozinha">
+            </a>
+        </div>
+        <button class="navbar-toggler">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul class="navbar-links">
+            <li><a href="#home">Início</a></li>
+            <li><a href="#about">Sobre Nós</a></li>
+            <li><a href="#section-products">Produtos</a></li>
+            <li><a href="#contact">Contato</a></li>
+            <li><a href="#newsletter">Receitas</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- BANNER -->
+<div id="home" class="banner">
+    <div>
+        <h1>Bem-vindo ao Já Pra Cozinha</h1>
+        <p>Descubra novos sabores para o seu prato</p>
+    </div>
+</div>
+
+<div id="about"  class="section-about">
+    <h2>Sobre Nós</h2>
+    <div class="separator"></div>
+    <div class="content">
+        <div>
+            <p>
+                Nascido em 2016 a partir de uma busca incansável por novos sabores, o Já Pra Cozinha é uma fabricante
+                artesanal dedicada a criar produtos que incrementem e transformem o seu prato. Nossa missão é trazer
+                experiências incríveis para o seu paladar, sempre fugindo do ordinário e do tradicional.
+            </p>
+            <img src="{% static 'assets/images/comidacriativa.webp' %}" alt="Sobre Nós">
+        </div>
+        <div>
+            <img src="{% static 'assets/images/sobre2.webp' %}" alt="Nossa Missão">
+            <p>
+                Experimente toda a nossa linha e descubra os sabores únicos e marcantes de cada produto! Seja criando
+                suas receitas com nossos molhos como acompanhamento, tempero ou base, as possibilidades são imensas.
+                Garantimos que você vai se surpreender cada vez mais!
+            </p>
+        </div>
+        <div>
+            <p>
+                Com uma linha diversificada de molhos, geleias e temperos, queremos proporcionar uma verdadeira viagem
+                gastronômica. Cada um dos nossos produtos é desenvolvido com misturas exóticas, temperos marcantes e
+                aromas inacreditáveis, focando sempre em oferecer uma nova experiência a cada sabor descoberto.
+            </p>
+            <img src="{% static 'assets/images/sobre3.webp' %}" alt="Nossos Valores">
+        </div>
+    </div>
+</div>
+    
+    
+<!-- Newsletter -->
+    <div id="newsletter" class="section-newsletter">
+    <div class="newsletter-content">
+        <h2>Inscreva-se para Receber Receitas Semanais!</h2>
+        <p>Descubra novas receitas incríveis toda semana. Digite seu email abaixo para não perder nenhuma delícia!</p>
+        <form action="#" method="post" class="newsletter-form">
+            <input type="email" name="email" placeholder="Digite seu email" required>
+            <button type="submit">Inscreva-se</button>
+        </form>
+    </div>
+</div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const emailInput = document.querySelector('.newsletter-form input[type="email"]');
+        const subscribeButton = document.querySelector('.newsletter-form button');
+
+        emailInput.addEventListener('focus', function() {
+            emailInput.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.2)';
+        });
+
+        emailInput.addEventListener('blur', function() {
+            emailInput.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+        });
+
+        subscribeButton.addEventListener('mouseover', function() {
+            subscribeButton.style.transform = 'translateY(-2px)';
+            subscribeButton.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.2)';
+        });
+
+        subscribeButton.addEventListener('mouseout', function() {
+            subscribeButton.style.transform = 'translateY(0)';
+            subscribeButton.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+        });
+    });
+</script>
+
+<div id="section-products" class="section-products">
+    <h2>Produtos</h2>
+    <div  class="separator"></div>
+
+    <!-- Categoria Molhos -->
+    <div class="category">
+        <div class="category-title">Molhos</div>
+        <div class="category-content">
+            <div class="product">
+                <img src="{% static 'assets/images/molhosmostardaeketchup.png' %}" alt="Molho">
+                <p>
+                    Nossos molhos são preparados com ingredientes frescos e selecionados, oferecendo sabores autênticos e inesquecíveis.
+                    Experimente a variedade de molhos que combinam perfeitamente com suas receitas favoritas.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categoria Sais -->
+    <div class="category">
+        <div class="category-title">Sais</div>
+        <div class="category-content">
+            <div class="product">
+                <img src="{% static 'assets/images/sais.webp' %}" alt="Sal">
+                <p>
+                    Descubra nossos sais especiais, ideais para realçar o sabor de qualquer prato com um toque gourmet.
+                    Sais premium com uma seleção cuidadosa de ingredientes para proporcionar o máximo de sabor.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categoria Chutneis -->
+    <div class="category">
+        <div class="category-title">Chutneis</div>
+        <div class="category-content">
+            <div class="product">
+                <img src="{% static 'assets/images/chutneis.webp' %}" alt="Chutney">
+                <p>
+                    Nossos chutneis são elaborados para oferecer uma experiência sensorial rica e marcante.
+                    Perfeitos para acompanhar carnes, queijos e diversos pratos, proporcionando um sabor único.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <!-- CONTATO -->
+<div id="contact" class="section-contact">
+    <h2>Contato</h2>
+    <div class="separator"></div>
+    <p>Entre em contato conosco para saber mais sobre nossos produtos ou para enviar sugestões!</p>
+    <form action="#" method="post" class="contact-form">
+        <input type="text" name="name" placeholder="Seu Nome" required>
+        <input type="email" name="email" placeholder="Seu Email" required>
+        <textarea name="message" placeholder="Sua Mensagem" required></textarea>
+        <button type="submit">Enviar Mensagem</button>
+    </form>
+</div>
+    
+    
+    <footer class="footer">
+    <div class="footer-container">
+        <div class="footer-logo">
+            <img src="{% static 'assets/images/Logo Já Pra Cozinha (1).png' %}" alt="Logo Já Pra Cozinha">
+        </div>
+        <div class="footer-links">
+            <a href="#about">Sobre Nós</a>
+            <a href="#products">Produtos</a>
+            <a href="#contact">Contato</a>
+            <a href="#newsletter">Receitas Semanais</a>
+        </div>
+        <div class="footer-social">
+            <a href="https://www.facebook.com" target="_blank" class="social-icon">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.twitter.com" target="_blank" class="social-icon">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Já Pra Cozinha. Todos os direitos reservados.</p>
+    </div>
+</footer>
+
+
+<!-- JavaScript para Navbar e Efeitos -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const navbar = document.querySelector('.navbar');
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        const navbarLinks = document.querySelector('.navbar-links');
+        const sticky = navbar.offsetTop;
+
+        // Sticky Navbar
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > sticky) {
+                navbar.classList.add('fixed');
+            } else {
+                navbar.classList.remove('fixed');
+            }
+        });
+
+        // Toggle Navbar on Mobile
+        navbarToggler.addEventListener('click', function() {
+            navbarLinks.classList.toggle('show');
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    });
+</script>
+
+
+{% endblock %}
