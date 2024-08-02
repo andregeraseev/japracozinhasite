@@ -174,7 +174,7 @@ header h1 {
 }
 
 .banner h1 {
-    font-size: 4em;
+    font-size: 3em;
     margin: 0;
     animation: slideInLeft 1.5s ease-out;
 }
@@ -285,6 +285,8 @@ header h1 {
 
     .section-about .content div {
         padding: 20px;
+        min-height: max-content;
+        margin-bottom: 10px;
     }
 
     .section-about p {
@@ -307,7 +309,7 @@ header h1 {
 
 @media (max-width: 480px) {
     .banner h1 {
-        font-size: 2.5em;
+        font-size: 2em;
     }
 
     .banner p {
@@ -436,6 +438,15 @@ header h1 {
         height: 40px;
         top: -40px;
     }
+    
+    .section-products .product p {
+    font-size: 1em;
+    line-height: 1.8em;
+    color: #444;
+    margin: 0;
+    flex-grow: 1;
+    text-align: center;
+}
 }
 
 @media (max-width: 480px) {
@@ -795,6 +806,12 @@ header h1 {
     .section-contact p {
         font-size: 1em;
     }
+    
+    .contact-form input,
+.contact-form textarea {
+    width: 95%;
+   
+}
 }
 
 
@@ -827,7 +844,7 @@ header h1 {
 <!-- BANNER -->
 <div id="home" class="banner">
     <div>
-        <h1>Bem-vindo ao Já Pra Cozinha</h1>
+        <h1>Bem-vindo ao <br> Já Pra Cozinha</h1>
         <p>Descubra novos sabores para o seu prato</p>
     </div>
 </div>
@@ -983,7 +1000,7 @@ header h1 {
             <a href="https://www.facebook.com" target="_blank" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
             </a>
-            <a href="https://www.instagram.com" target="_blank" class="social-icon">
+            <a href="https://www.instagram.com/japracozinhanet" target="_blank" class="social-icon">
                 <i class="fab fa-instagram"></i>
             </a>
             <a href="https://www.twitter.com" target="_blank" class="social-icon">
