@@ -44,12 +44,17 @@ body, html {
 
 .navbar-toggler {
     display: none; /* Oculto em telas grandes */
-    font-size: 1.5em;
+    max-width: 1.5em;
     background: none;
     border: none;
     color: #fff;
     cursor: pointer;
     transition: color 0.3s;
+}
+.menu-icon {
+    width: 40px;  /* Defina o tamanho da imagem do ícone */
+    height: auto;
+    transition: transform 0.2s;
 }
 
 .navbar-toggler:hover {
@@ -191,17 +196,18 @@ header h1 {
 .section-about h2 {
     font-family: 'Lobster', cursive;
     font-size: 3em;
-    margin-bottom: 20px;
+    margin-bottom: 2px;
     color: #ff5722;
     animation: fadeInUp 1s ease-in-out;
 }
 
-.section-about .separator {
-    width: 60px;
-    height: 3px;
-    background-color: #ff5722;
-    margin: 20px auto;
-    animation: growWidth 1s ease-out forwards;
+
+.separator img{
+    
+    width: 180px;
+    height: auto;
+    margin: 2px auto;
+    {#animation: growWidth 1s ease-out forwards;#}
 }
 
 .section-about .content {
@@ -325,7 +331,7 @@ header h1 {
 .section-products h2 {
     font-family: 'Lobster', cursive;
     font-size: 3em;
-    margin-bottom: 40px;
+    margin-bottom: 2px;
     color: #ff5722;
     animation: fadeInUp 1s ease-in-out;
 }
@@ -702,16 +708,16 @@ header h1 {
 .section-contact h2 {
     font-family: 'Pacifico', cursive; /* Fonte manuscrita */
     font-size: 3em;
-    margin-bottom: 20px;
+    margin-bottom: 2px;
     color: #333;
 }
 
-.section-contact .separator {
-    width: 50px;
-    height: 3px;
-    background-color: #333;
-    margin: 20px auto;
-}
+{#.section-contact .separator {#}
+{#    width: 50px;#}
+{#    height: 3px;#}
+{#    background-color: #333;#}
+{#    margin: 20px auto;#}
+{#}#}
 
 .section-contact p {
     font-size: 1.2em;
@@ -800,12 +806,15 @@ header h1 {
             </a>
         </div>
         <button class="navbar-toggler">
-            <i class="fas fa-bars"></i>
+            <!-- Imagem do menu fechado -->
+            <img src="{% static 'assets/images/abrirmenu.png' %}" alt="Menu" class="menu-icon" id="menu-icon">
+        </button>
+            
         </button>
         <ul class="navbar-links">
             <li><a href="#home">Início</a></li>
             <li><a href="#about">Sobre Nós</a></li>
-            <li><a href="#section-products">Produtos</a></li>
+            <li><a href="#products">Produtos</a></li>
             <li><a href="#contact">Contato</a></li>
             <li><a href="#newsletter">Receitas</a></li>
         </ul>
@@ -822,7 +831,9 @@ header h1 {
 
 <div id="about"  class="section-about">
     <h2>Sobre Nós</h2>
-    <div class="separator"></div>
+    <div class="separator">
+        <img src="{% static 'assets/images/garfo.png' %}" alt="garfo">
+    </div>
     <div class="content">
         <div>
             <p>
@@ -889,9 +900,11 @@ header h1 {
     });
 </script>
 
-<div id="section-products" class="section-products">
+<div id="products" class="section-products">
     <h2>Produtos</h2>
-    <div  class="separator"></div>
+    <div class="separator">
+        <img src="{% static 'assets/images/faca.png' %}" alt="garfo">
+    </div>
 
     <!-- Categoria Molhos -->
     <div class="category">
@@ -939,7 +952,9 @@ header h1 {
     <!-- CONTATO -->
 <div id="contact" class="section-contact">
     <h2>Contato</h2>
-    <div class="separator"></div>
+    <div class="separator">
+        <img src="{% static 'assets/images/colher.png' %}" alt="garfo">
+    </div>
     <p>Entre em contato conosco para saber mais sobre nossos produtos ou para enviar sugestões!</p>
     <form action="#" method="post" class="contact-form">
         <input type="text" name="name" placeholder="Seu Nome" required>
@@ -982,35 +997,47 @@ header h1 {
 <!-- JavaScript para Navbar e Efeitos -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const navbar = document.querySelector('.navbar');
-        const navbarToggler = document.querySelector('.navbar-toggler');
-        const navbarLinks = document.querySelector('.navbar-links');
-        const sticky = navbar.offsetTop;
+    const navbar = document.querySelector('.navbar');
+    const navbarToggler = document.querySelector('.navbar-toggler');
+    const navbarLinks = document.querySelector('.navbar-links');
+    const menuIcon = document.getElementById('menu-icon');
+    const sticky = navbar.offsetTop;
 
-        // Sticky Navbar
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > sticky) {
-                navbar.classList.add('fixed');
-            } else {
-                navbar.classList.remove('fixed');
-            }
-        });
+    // Caminho para as imagens
+    const menuClosedImage = "{% static 'assets/images/abrirmenu.png' %}";
+    const menuOpenedImage = "{% static 'assets/images/menufechado.png' %}";
 
-        // Toggle Navbar on Mobile
-        navbarToggler.addEventListener('click', function() {
-            navbarLinks.classList.toggle('show');
-        });
+    // Sticky Navbar
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > sticky) {
+            navbar.classList.add('fixed');
+        } else {
+            navbar.classList.remove('fixed');
+        }
+    });
 
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+    // Toggle Navbar on Mobile
+    navbarToggler.addEventListener('click', function() {
+        navbarLinks.classList.toggle('show');
+        
+        // Alternar imagem do ícone
+        if (navbarLinks.classList.contains('show')) {
+            menuIcon.src = menuOpenedImage; // Mudar para imagem de menu aberto
+        } else {
+            menuIcon.src = menuClosedImage; // Mudar para imagem de menu fechado
+        }
+    });
+
+    // Smooth Scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
             });
         });
     });
+});
 </script>
 
 
