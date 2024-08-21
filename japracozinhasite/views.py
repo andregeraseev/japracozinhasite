@@ -5,7 +5,7 @@ import requests
 from django.conf import settings  # Para acessar as variáveis de configuração
 from django.views.decorators.http import require_POST
 from decouple import config
-Api_brevo = config('API_Brevo')
+Api_brevo = config('API_brevo')
 
 def subscribe_to_newsletter(email):
     print('Entrando no envio para brevo')
