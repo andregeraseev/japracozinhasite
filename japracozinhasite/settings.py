@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,13 +21,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-fu#7!=jz0ldk@sxm^3haf$=2&upqv3ew+#=!a+$60*-)q7u$xq'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["japracozinha.pythonanywhere.com"]
+ALLOWED_HOSTS = []
 
+# EMAIL
+
+EMAIL_HOST = 'smtp.titan.email'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'contato@xflavors.net'  # Substitua por seu e-mail real
+EMAIL_HOST_PASSWORD = config('Senha_email') # Substitua por sua senha real
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+ADMIN_EMAIL = "contato@xflavors.net"  # Substitua por seu e-mail real
+SUPPORT_EMAIL = "contato@xflavors.net"  # Substitua por seu e-mail real
+DEFAULT_FROM_EMAIL = ADMIN_EMAIL
+SERVER_EMAIL = ADMIN_EMAIL
 
 # Application definition
 
@@ -37,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'contatos',
 ]
 
 MIDDLEWARE = [

@@ -1,400 +1,209 @@
 {% extends "home/base.html" %}
 {% load static %}
 
-
-
-{% block title %}Home - Ja pra cozinha{% endblock %}
+{% block title %}Home - Já Pra Cozinha{% endblock %}
 
 {% block content %}
-<style>
-/* Estilos gerais */
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
-
-/* Estilo para o cabeçalho */
-header {
-    background: url('../images/header.jpg') no-repeat center center;
-    background-size: cover;
-    color: white;
-    text-align: center;
-    padding: 50px 0;
-    font-family: 'Georgia', serif;
-}
-
-header h1 {
-    font-size: 4em;
-    margin: 0;
-}
-
-/* Estilo para o banner principal */
-.banner {
-    width: 100%;
-    min-height: 100vh; /* Altura inicial como 50% da altura da viewport */
-    background: url("{% static 'assets/images/fundosite.png' %}") no-repeat center center;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-align: center;
-}
-
-.banner h1 {
-    font-size: 3em;
-    margin: 0;
-}
-
-.banner p {
-    font-size: 1.2em;
-}
-
-/* Estilo para a seção Sobre Nós */
-.section-about {
-    padding: 40px 20px;
-    background-color: #f0f4f8;
-    text-align: center;
-}
-
-.section-about h2 {
-    font-family: 'Pacifico', cursive; /* Fonte manuscrita */
-    font-size: 2.5em;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.section-about .separator {
-    width: 50px;
-    height: 2px;
-    background-color: #333;
-    margin: 20px auto;
-}
-
-.section-about .content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    flex-direction: column;
-}
-
-.section-about .content div {
-    border-radius: 15px;
-    background-color: white;
-    border: #333;
-    display: flex;
-    max-width: 1200px;
-    padding: 43px;
-    box-sizing: border-box;
-    align-items: center;
-}
-
-.section-about .content div img {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    border-radius: 50%; /* Imagens redondas */
-    margin: 20px 0;
-}
-
-.section-about p {
-    font-size: 1.1em;
-    line-height: 1.6em;
-    color: #000;
-    max-width: 400px;
-    padding: 40px;
-}
-
-/* Responsividade */
-@media (max-width: 1200px) {
-    .section-about .content div {
-        flex-direction: column; /* Coloca o texto e a imagem em uma coluna em dispositivos menores */
-        text-align: center;
+    <style>
+    :root {
+        --newsletter-bg: url("{% static 'assets/images/newsletter.webp' %}");
     }
-    
-    .section-about p {
-        order: 1;
-        
-    }
-    
-    .section-about .content div img {
-        order: 0;
-    }
-}
-
-@media (max-width: 768px) {
-    .section-about .content {
-        gap: 10px; /* Reduz o espaçamento entre as colunas em dispositivos menores */
-    }
-
-    .section-about .content div {
-        padding: 20px; /* Reduz o padding em dispositivos menores */
-    }
-
-    .section-about p {
-        order: 1;
-        max-width: 300px; /* Reduz o tamanho máximo do texto em dispositivos menores */
-        padding: 20px;
-    }
-    
-    .section-about .content div img {
-        order: 0;
-    }
-}
-
-@media (max-width: 480px) {
-    .banner h1 {
-        font-size: 2em; /* Ajusta o tamanho da fonte no banner para dispositivos menores */
-    }
-
-    .banner p {
-        font-size: 1em; /* Ajusta o tamanho da fonte no banner para dispositivos menores */
-    }
-
-    .section-about h2 {
-        font-size: 2em; /* Ajusta o tamanho da fonte do título "Sobre Nós" em dispositivos menores */
-    }
-
-    .section-about p {
-        font-size: 1em; /* Ajusta o tamanho da fonte do texto em dispositivos menores */
-    }
-}
-
-/* Estilo para a seção de Produtos */
-.section-products {
-    padding: 60px 20px;
-    background-color: #f0f4f8;
-    text-align: center;
-}
-
-.section-products h2 {
-    font-family: 'Pacifico', cursive; /* Fonte manuscrita */
-    font-size: 3em;
-    margin-bottom: 40px;
-    color: #333;
-}
-
-.section-products .category {
-    margin: 60px 0;
-    position: relative;
-    overflow: hidden;
-    border-radius: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.section-products .category:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-}
-
-.section-products .category-title {
-    font-size: 2em;
-    font-weight: bold;
-    color: #fff;
-    background-color: #333;
-    padding: 15px 30px;
-    border-radius: 0 0 20px 20px;
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.section-products .category-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 50px 20px;
-    background-color: #f9f9f9;
-    border-radius: 20px;
-    position: relative;
-}
-
-.section-products .category-content::before {
-    content: '';
-    position: absolute;
-    top: -60px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120%;
-    height: 60px;
-    background-color: #333;
-    border-radius: 50%;
-    z-index: 0;
-}
-
-.section-products .product {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    {#max-width: 800px;#}
-    width: 100%;
-    margin: 20px 0;
-    padding: 20px;
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-}
-
-.section-products .product:hover {
-    transform: translateY(-5px);
-}
-
-.section-products .product img {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    border-radius: 15px;
-    margin-right: 30px;
-    flex-shrink: 0;
-}
-
-.section-products .product p {
-    font-size: 1.1em;
-    line-height: 1.6em;
-    color: #444;
-    margin: 0;
-    flex-grow: 1;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .section-products .product {
-        flex-direction: column;
-        text-align: center;
-        padding: 30px;
-    }
-
-    .section-products .product img {
-        margin: 0 0 20px 0;
-    }
-
-    .section-products .category-content::before {
-        height: 40px;
-        top: -40px;
-    }
-}
-
-@media (max-width: 480px) {
-    .section-products h2 {
-        font-size: 2.5em;
-    }
-
-    .section-products .category-title {
-        font-size: 1.8em;
-    }
-}
-
-
-</style>   
-    
-<div class="banner" >
-                
- </div>
-<div class="section-about">
-    <h2>Sobre Nós</h2>
-    <div class="separator"> </div>
-    <div class="content">
-        <div>
-            <p>
-                 Nascido em 2016 a partir de uma busca incansável por novos sabores, o Já Pra Cozinha é uma fabricante
-                artesanal dedicada a criar produtos que incrementem e transformem o seu prato. Nossa missão é trazer
-                experiências incríveis para o seu paladar, sempre fugindo do ordinário e do tradicional.
-
-                </p>
-            <img src="{% static 'assets/images/comidacriativa.webp' %}" alt="Sobre Nós">
+</style>
+<header>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <a href="#home">
+                    <img src="{% static 'assets/images/logohorizontaltransparencia.png' %}" alt="Logo Já Pra Cozinha" width="400" height="auto">
+                </a>
+            </div>
+            <button class="navbar-toggler" aria-label="Toggle navigation">
+                <img src="{% static 'assets/images/abrirmenu.png' %}" alt="Menu" class="menu-icon" id="menu-icon" width="40" height="40">
+            </button>
+            <ul class="navbar-links">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#about">Sobre Nós</a></li>
+                <li><a href="#products">Produtos</a></li>
+                <li><a href="#contact">Contato</a></li>
+                <li><a href="#newsletter">Receitas</a></li>
+            </ul>
         </div>
-        <div>
-            <img src="{% static 'assets/images/sobre2.webp' %}" alt="Nossa Missão">
-            <p> Experimente toda a nossa linha e descubra os sabores únicos e marcantes de cada produto! Seja criando
-                suas receitas com nossos molhos como acompanhamento, tempero ou base, as possibilidades são imensas.
-                Garantimos que você vai se surpreender cada vez mais!
-                       </div>
-        <div>
-            <p>
-                Com uma linha diversificada de molhos, geleias e temperos, queremos proporcionar uma verdadeira viagem
-                gastronômica. Cada um dos nossos produtos é desenvolvido com misturas exóticas, temperos marcantes e
-                aromas inacreditáveis, focando sempre em oferecer uma nova experiência a cada sabor descoberto. </p>
-            <img src="{% static 'assets/images/sobre3.webp' %}" alt="Nossos Valores">
+    </nav>
+</header>
+
+<main>
+    <section id="home" class="banner">
+        <div class="saudacao">
+            <h1>Bem-vindo</h1>
+            <p>Descubra novos sabores para o seu prato</p>
         </div>
-    </div>
-</div>
-    
-    
- <div class="section-products">
-    <h2>Produtos</h2>
-     <div class="separator"> </div>
-    
-    <!-- Categoria Molhos -->
-    <div class="category">
-        <div class="category-title">Molhos</div>
-        <div class="category-content">
-            <div class="product">
-                <img src="{% static 'assets/images/molhosmostardaeketchup.png' %}" alt="Molho">
-                <p>
-                    Nossos molhos são preparados com ingredientes frescos e selecionados, oferecendo sabores autênticos e inesquecíveis.
-                    Experimente a variedade de molhos que combinam perfeitamente com suas receitas favoritas.
-                </p>
+    </section>
+
+    <section id="about" class="section-about">
+        <h2>Sobre Nós</h2>
+        <div class="separator">
+            <img src="{% static 'assets/images/garfo.png' %}" alt="Separador" width="180" height="auto">
+        </div>
+        <div class="content">
+            <div>
+                <img src="{% static 'assets/images/comidacriativa.webp' %}" alt="Sobre Nós" width="300" height="auto" loading="lazy">
+                <p>Nascido em 2016 a partir de uma busca incansável por novos sabores, o Já Pra Cozinha é uma fabricante
+                    artesanal dedicada a criar produtos que incrementem e transformem o seu prato. Nossa missão é trazer
+                    experiências incríveis para o seu paladar, sempre fugindo do ordinário e do tradicional.</p>
+                <p>Experimente toda a nossa linha e descubra os sabores únicos e marcantes de cada produto! Seja criando
+                    suas receitas com nossos molhos como acompanhamento, tempero ou base, as possibilidades são imensas.
+                    Garantimos que você vai se surpreender cada vez mais!</p>
+                <p>Com uma linha diversificada de molhos, geleias e temperos, queremos proporcionar uma verdadeira viagem
+                    gastronômica. Cada um dos nossos produtos é desenvolvido com misturas exóticas, temperos marcantes e
+                    aromas inacreditáveis, focando sempre em oferecer uma nova experiência a cada sabor descoberto.</p>
             </div>
         </div>
-    </div>
-    
-    <!-- Categoria Sais -->
-    <div class="category">
-        <div class="category-title">Sais</div>
-        <div class="category-content">
-            <div class="product">
-                <img src="{% static 'assets/images/sais.webp' %}" alt="Sal">
-                <p>
-                    Descubra nossos sais especiais, ideais para realçar o sabor de qualquer prato com um toque gourmet.
-                    Sais premium com uma seleção cuidadosa de ingredientes para proporcionar o máximo de sabor.
-                </p>
+    </section>
+
+    <section id="newsletter" class="section-newsletter">
+        <div class="newsletter-content">
+            <h2>Inscreva-se para Receber Receitas Semanais!</h2>
+            <p>Descubra novas receitas incríveis toda semana. Digite seu email abaixo para não perder nenhuma delícia!</p>
+            <form id="newsletter-form" class="newsletter-form">
+    {% csrf_token %}
+    <input type="email" id="email-input" name="email" placeholder="Digite seu email" required>
+    <button type="submit">Inscreva-se</button>
+    <div id="feedback" class="feedback"></div>
+</form>
+
+            <div id="feedback" class="feedback"></div>
+        </div>
+    </section>
+
+    <section id="products" class="section-products">
+        <h2>Produtos</h2>
+        <div class="separator">
+            <img src="{% static 'assets/images/faca.png' %}" alt="Separador" width="180" height="auto">
+        </div>
+
+        <div class="category molhos">
+            <div class="category-title">Molhos</div>
+            <div class="category-content">
+                <div class="product">
+                    <img src="{% static 'assets/images/molhosmostardaeketchup.png' %}" alt="Molho" width="300" height="auto" loading="lazy">
+                    <p>Nossos molhos são preparados com ingredientes frescos e selecionados, oferecendo sabores autênticos e inesquecíveis.
+                        Experimente a variedade de molhos que combinam perfeitamente com suas receitas favoritas.</p>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <!-- Categoria Chutneis -->
-    <div class="category">
-        <div class="category-title">Chutneis</div>
-        <div class="category-content">
-            <div class="product">
-                <img src="{% static 'assets/images/chutneis.webp' %}" alt="Chutney">
-                <p>
-                    Nossos chutneis são elaborados para oferecer uma experiência sensorial rica e marcante.
-                    Perfeitos para acompanhar carnes, queijos e diversos pratos, proporcionando um sabor único.
-                </p>
+
+        <div class="category sais">
+            <div class="category-title">Sais</div>
+            <div class="category-content">
+                <div class="product">
+                    <img src="{% static 'assets/images/sais.webp' %}" alt="Sal" width="300" height="auto" loading="lazy">
+                    <p>Descubra nossos sais especiais, ideais para realçar o sabor de qualquer prato com um toque gourmet.
+                        Sais premium com uma seleção cuidadosa de ingredientes para proporcionar o máximo de sabor.</p>
+                </div>
             </div>
         </div>
+
+        <div class="category chutneis">
+            <div class="category-title">Chutneis</div>
+            <div class="category-content">
+                <div class="product">
+                    <img src="{% static 'assets/images/chutneis.webp' %}" alt="Chutney" width="300" height="auto" loading="lazy">
+                    <p>Nossos chutneis são elaborados para oferecer uma experiência sensorial rica e marcante.
+                        Perfeitos para acompanhar carnes, queijos e diversos pratos, proporcionando um sabor único.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-contact">
+    <h2>Contato</h2>
+    <div class="separator">
+        <img src="{% static 'assets/images/colher.png' %}" alt="Separador" width="180" height="auto">
     </div>
-</div>
+    <p>Entre em contato conosco para saber mais sobre nossos produtos ou para enviar sugestões!</p>
+    <form id="contact-form" class="contact-form">
+        {% csrf_token %}
+        <input type="text" id="name" name="name" placeholder="Seu Nome" required>
+        <input type="email" id="email" name="email" placeholder="Seu Email" required>
+        <textarea id="message" name="message" placeholder="Sua Mensagem" required></textarea>
+        <button type="submit">Enviar Mensagem</button>
+        <div id="contact-feedback" class="feedback"></div>
+    </form>
     
+</section>
+</main>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-logo">
+            <img src="{% static 'assets/images/Logo Já Pra Cozinha (1).png' %}" alt="Logo Já Pra Cozinha" width="120" height="auto">
+        </div>
+        <div class="footer-links">
+            <a href="#about">Sobre Nós</a>
+            <a href="#products">Produtos</a>
+            <a href="#contact">Contato</a>
+            <a href="#newsletter">Receitas Semanais</a>
+        </div>
+        <div class="footer-social">
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/japracozinhanet" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Já Pra Cozinha. Todos os direitos reservados.</p>
+    </div>
+</footer>
+
+
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const products = document.querySelectorAll('.product');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Seleciona os elementos
+        const molhos = document.querySelector('.molhos');
+        const sais = document.querySelector('.sais');
+        const chutneis = document.querySelector('.chutneis');
 
-        products.forEach(product => {
-            product.addEventListener('mouseover', function() {
-                product.style.transform = 'translateY(-10px)';
-                product.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.2)';
-            });
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.bottom >= 0
+            );
+        }
 
-            product.addEventListener('mouseout', function() {
-                product.style.transform = 'translateY(0)';
-                product.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.1)';
-            });
-        });
+        function addAnimationClass() {
+            // Verifica se o elemento existe antes de acessar classList
+            if (molhos && isInViewport(molhos)) {
+                molhos.classList.add('animate-right');
+                molhos.classList.remove('hidden');
+            }
+            if (sais && isInViewport(sais)) {
+                sais.classList.add('animate-left');
+                sais.classList.remove('hidden');
+            }
+            if (chutneis && isInViewport(chutneis)) {
+                chutneis.classList.add('animate-right');
+                chutneis.classList.remove('hidden');
+            }
+        }
+
+        window.addEventListener('scroll', addAnimationClass);
+        window.addEventListener('resize', addAnimationClass); // Para garantir que funcione em redimensionamentos
+
+        // Adiciona a classe 'hidden' para esconder inicialmente os elementos, se existirem
+        if (molhos) molhos.classList.add('hidden');
+        if (sais) sais.classList.add('hidden');
+        if (chutneis) chutneis.classList.add('hidden');
+
+        // Executa a função inicialmente para verificação imediata
+        addAnimationClass();
     });
 </script>
-
 
 {% endblock %}
