@@ -1,0 +1,91 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.env
+*.venv
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Django
+*.log
+*.pot
+*.pyc
+*.mo
+*.db
+*.sqlite3
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+static/
+*.pyo
+*.pyd
+
+# Configuração do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Diretórios de dependências
+node_modules/
+bower_components/
+
+# Compilados
+dist/
+build/
+out/
+
+# IDEs e editores
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Testes
+coverage/
+.nyc_output/
+*.lcov
+htmlcov/
+
+# Configurações de sistema
+*.env
+.env.*
+
+# Arquivos de migrações
+**/migrations/**/__.pyc
+**/migrations/__pycache__/
+
+# Banco de dados local
+*.sqlite3
+
+# Configurações de Docker
+docker-compose.override.yml
+
+# Arquivos temporários
+tmp/
+temp/
+*.tmp
+*.temp
+*.pid
+*.seed
+*.pid.lock
+
+# Arquivos de backup
+*.bak
+*.old
+
+# Arquivos de lock
+*.lock
+
+# Configuração para projetos que utilizam macOS
+.AppleDouble
+.LSOverride
+
+# Arquivos de configuração pessoal
+*.iml
